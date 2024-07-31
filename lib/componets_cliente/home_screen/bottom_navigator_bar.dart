@@ -1,7 +1,11 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:meu_tcc/cliente_screens/apresentacao_screen.dart';
 import 'package:meu_tcc/cliente_screens/busca_screen.dart';
+import 'package:meu_tcc/cliente_screens/categorias_screen.dart';
 import 'package:meu_tcc/cliente_screens/home_screen.dart';
+import 'package:meu_tcc/cliente_screens/perfil_screen.dart';
+
 import 'package:meu_tcc/themes/themes_colors.dart';
 
 class CurvedBottomNavigationBar extends StatefulWidget {
@@ -33,7 +37,9 @@ class _CurvedBottomNavigationBarState extends State<CurvedBottomNavigationBar> {
         children: [
           // Suas telas vão aqui
           HomeScreenCliente(),
-          BuscaProdutoScreen()
+          ApresentacaoScreen(),
+          CategoriaScreenCliente(),
+          PerfilScreenCliente()
         ],
       ),
       floatingActionButton: Container(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meu_tcc/componets_cliente/buscar_produto_scrren/header_buscar_produto.dart';
+import 'package:meu_tcc/themes/themes_colors.dart';
 
 class BuscaProdutoScreen extends StatefulWidget {
   const BuscaProdutoScreen({super.key});
@@ -19,7 +20,10 @@ class _BuscaProdutoScreenState extends State<BuscaProdutoScreen> {
             height: 25,
           ),
           Container(
-            color: Color.fromRGBO(29, 33, 27, 1),
+            decoration: BoxDecoration(
+              color: ThemeColors.colorCard['cartao'],
+              borderRadius: BorderRadius.circular(10),
+            ),
             width: 250,
             height: 130,
             child: Column(

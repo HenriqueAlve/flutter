@@ -2,10 +2,24 @@ import 'package:meu_tcc/data/produtos.model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class ProdutoService {
   Future<List<ProdutoDTO>> buscarProdutos() async {
-    final response = await http
-        .get(Uri.parse('http://192.168.100.2:8080/api/produtos/listar'));
+    // Recupera o token de autenticação do SharedPreferences
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('authToken');
+
+    // Configura os headers com o token de autenticação
+    final headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    };
+
+    final response = await http.get(
+      Uri.parse('http://192.168.100.2:8080/api/produtos/listar'),
+      headers: headers,
+    );
 
     if (response.statusCode == 200) {
       final List<dynamic> responseMap = jsonDecode(response.body);
@@ -19,8 +33,20 @@ class ProdutoService {
 }
 
 Future<List<ProdutoDTO>> buscarProdutos() async {
-  final response = await http
-      .get(Uri.parse('http://192.168.100.2:8080/api/produtos/listar'));
+  // Recupera o token de autenticação do SharedPreferences ou do AuthProvider
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String? token = prefs.getString('authToken');
+
+  // Configura os headers com o token de autenticação
+  final headers = {
+    'Authorization': 'Bearer $token',
+    'Content-Type': 'application/json',
+  };
+
+  final response = await http.get(
+    Uri.parse('http://192.168.100.2:8080/api/produtos/listar'),
+    headers: headers,
+  );
 
   if (response.statusCode == 200) {
     final List<dynamic> responseMap = jsonDecode(response.body);
@@ -33,8 +59,20 @@ Future<List<ProdutoDTO>> buscarProdutos() async {
 }
 
 Future<List<CategoriaDTO>> buscarCategorias() async {
-  final response = await http
-      .get(Uri.parse('http://192.168.100.2:8080/api/categoria/listar'));
+  // Recupera o token de autenticação do SharedPreferences
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final String? token = prefs.getString('authToken');
+
+  // Configura os headers com o token de autenticação
+  final headers = {
+    'Authorization': 'Bearer $token',
+    'Content-Type': 'application/json',
+  };
+
+  final response = await http.get(
+    Uri.parse('http://192.168.100.2:8080/api/categoria/listar'),
+    headers: headers,
+  );
 
   if (response.statusCode == 200) {
     final List<dynamic> responseMap = jsonDecode(response.body);
@@ -103,5 +141,27 @@ class VendaService {
     } else {
       throw Exception('Failed to load total pedidos');
     }
+  }
+}
+
+Future<void> registrarVenda(int produtoId, int quantidade) async {
+  final url =
+      'http://192.168.100.2:8080/api/vendas/vender/$produtoId/$quantidade';
+
+  try {
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      print('Venda registrada com sucesso.');
+    } else {
+      print('Erro ao registrar venda: ${response.body}');
+    }
+  } catch (e) {
+    print('Exceção ao registrar venda: $e');
   }
 }

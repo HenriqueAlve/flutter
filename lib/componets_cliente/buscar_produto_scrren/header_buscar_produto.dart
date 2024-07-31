@@ -6,6 +6,8 @@ import 'package:meu_tcc/data/services.dart';
 class HeaderBuscarProduto extends StatefulWidget {
   const HeaderBuscarProduto({super.key});
 
+  get produto => null;
+
   @override
   State<HeaderBuscarProduto> createState() => _HeaderBuscarProdutoState();
 }
@@ -108,8 +110,16 @@ class _HeaderBuscarProdutoState extends State<HeaderBuscarProduto> {
   Widget _buildProductCard(ProdutoDTO produto) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => DetalhesDoProdutoScreen()));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetalhesDoProdutoScreen(
+              nomeProduto: widget.produto.nome,
+              imagemProduto: widget.produto.imagemBytes,
+              precoProduto: widget.produto.preco,
+            ),
+          ),
+        );
       },
       child: Card(
         color: Color.fromRGBO(16, 20, 15, 1),

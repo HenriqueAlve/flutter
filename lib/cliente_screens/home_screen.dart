@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:meu_tcc/componets_cliente/home_screen/bottom_navigator_bar.dart';
+
 import 'package:meu_tcc/componets_cliente/home_screen/carrosel.dart';
 import 'package:meu_tcc/componets_cliente/home_screen/cartao.dart';
 import 'package:meu_tcc/componets_cliente/home_screen/header_cliente.dart';
 import 'package:meu_tcc/componets_cliente/home_screen/texto_animado.dart';
 import 'package:meu_tcc/data/produtos.model.dart';
 import 'package:meu_tcc/data/services.dart';
+import 'package:meu_tcc/main.dart';
 
 class HomeScreenCliente extends StatelessWidget {
   const HomeScreenCliente({super.key});
@@ -33,7 +34,7 @@ class HomeScreenCliente extends StatelessWidget {
               future: ProdutoService().buscarProdutos(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(child: LoadingIndicator());
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Erro ao carregar produtos'));
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {

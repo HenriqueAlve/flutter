@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:meu_tcc/cliente_screens/carrinho_screen.dart';
 import 'package:meu_tcc/themes/themes_colors.dart';
 
 class HeaderCliente extends StatelessWidget {
@@ -38,9 +40,19 @@ class HeaderCliente extends StatelessWidget {
               size: 35,
             ),
             SizedBox(width: 20), // Espaçamento entre os ícones
-            Icon(
-              Icons.shopping_bag_rounded,
-              size: 35,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CarrinhoScrren(),
+                  ),
+                );
+              },
+              child: Icon(
+                Icons.shopping_bag_rounded,
+                size: 35,
+              ),
             ),
           ],
         ),
