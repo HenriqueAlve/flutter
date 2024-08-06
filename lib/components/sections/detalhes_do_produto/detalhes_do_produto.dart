@@ -19,7 +19,6 @@ class HeaderDetalhesDoProduto extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Row(
             children: [
-              // Exibir a imagem do produto com borda
               Container(
                 width: 100,
                 height: 100,
@@ -39,7 +38,6 @@ class HeaderDetalhesDoProduto extends StatelessWidget {
                       ),
               ),
               const SizedBox(width: 25),
-              // Exibir o nome e a categoria do produto
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -52,7 +50,7 @@ class HeaderDetalhesDoProduto extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    'Categoria: ${produto.categoriaDTO.nome}',
+                    'Categoria: ${produto.categoriaDTO?.nome}',
                     style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey,
@@ -73,7 +71,7 @@ class HeaderDetalhesDoProduto extends StatelessWidget {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
               ),
               Text(
-                'Estoque: ${produto.quantiadeEmEstoque}',
+                'Estoque: ${produto.quantidadeNoEstoque}',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
               )
             ],
@@ -85,7 +83,6 @@ class HeaderDetalhesDoProduto extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  // Implemente a navegação para a tela de edição aqui
                   // Navigator.of(context).push(MaterialPageRoute(builder: (context) => MinhaTelaDeEdicao()));
                 },
                 style: ElevatedButton.styleFrom(
@@ -101,24 +98,23 @@ class HeaderDetalhesDoProduto extends StatelessWidget {
               SizedBox(width: 5),
               ElevatedButton(
                 onPressed: () {
-                  // Chama o ConfirmationDialog para confirmar a exclusão
                   ConfirmationDialogHelper.showConfirmationDialog(
                     context,
                     title: 'Confirmar exclusão',
                     content: 'Tem certeza que deseja excluir este produto?',
                     confirmationCallback: () {
-                      // Lógica para exclusão do produto
-                      excluirProduto(produto
-                          .id); // Chama a função de exclusão com o ID do produto
-
-                      // Exemplo de como atualizar a interface após a exclusão
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                            content: Text('Produto excluído com sucesso!')),
-                      );
-
-                      // Aqui você pode atualizar a interface, por exemplo, navegando para a tela anterior
-                      Navigator.of(context).pop();
+                      if (produto.id != null) {
+                        excluirProduto(produto.id!);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content: Text('Produto excluído com sucesso!')),
+                        );
+                        Navigator.of(context).pop();
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Erro: ID do produto é nulo')),
+                        );
+                      }
                     },
                   );
                 },

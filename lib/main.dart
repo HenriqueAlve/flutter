@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:meu_tcc/cliente_screens/ajuda_screen.dart';
 import 'package:meu_tcc/cliente_screens/carrinho_screen.dart';
 import 'package:meu_tcc/cliente_screens/home_screen.dart';
+import 'package:meu_tcc/cliente_screens/perfil_cliente_screen.dart';
 import 'package:meu_tcc/componets_cliente/home_screen/bottom_navigator_bar.dart';
 import 'package:meu_tcc/data/produtos.model.dart';
 import 'package:meu_tcc/screens/adicionar_produto.dart';
@@ -21,8 +23,15 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => CartProvider()),
-        ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(
+          create: (_) => CartProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AuthProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => PedidoProvider(),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -32,7 +41,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -54,8 +62,10 @@ class MyApp extends StatelessWidget {
         '/home-cliente': (context) => HomeScreenCliente(),
         '/bar': (context) => CurvedBottomNavigationBar(),
         '/cadastro-usuario': (context) => CadastroDeUsuario(),
+        '/perfil-cliente': (context) => PerfilClienteScreen(),
+        '/ajuda': (context) => AjudaScreen(),
       },
-      initialRoute: '/cadastro-usuario',
+      initialRoute: '/login',
     );
   }
 }

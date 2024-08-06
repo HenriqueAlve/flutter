@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meu_tcc/data/produtos.model.dart';
 import 'package:meu_tcc/data/services.dart';
+import 'package:meu_tcc/main.dart';
 import 'package:meu_tcc/screens/adicionar_produto.dart';
 import 'package:meu_tcc/screens/listagem_produtos.dart';
 import 'package:meu_tcc/themes/my_themes.dart';
@@ -61,7 +62,7 @@ class _RecentContentState extends State<_RecentContent> {
       future: _futureProdutos,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return Center(child: LoadingIndicator());
         } else if (snapshot.hasError) {
           return Center(child: Text('Erro: ${snapshot.error}'));
         } else if (snapshot.hasData && snapshot.data != null) {
@@ -99,7 +100,7 @@ class _RecentContentState extends State<_RecentContent> {
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                                 Text(
-                                  'Categoria: ${produto.categoriaDTO.nome}',
+                                  'Categoria: ${produto.categoriaDTO?.nome}',
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ],
@@ -114,12 +115,10 @@ class _RecentContentState extends State<_RecentContent> {
               const SizedBox(height: 15),
               TextButton(
                 onPressed: () {
-                  // Navega para a tela que lista todos os produtos
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          TodosProdutosScreen(), // Tela que lista todos os produtos
+                      builder: (context) => TodosProdutosScreen(),
                     ),
                   );
                 },

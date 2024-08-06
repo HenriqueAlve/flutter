@@ -15,7 +15,9 @@ class AdicionarProdutos extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: [HeaderAdicionarProduto()],
+          children: [
+            HeaderAdicionarProduto(),
+          ],
         ),
       ),
     );

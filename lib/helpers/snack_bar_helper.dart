@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 
 class SnackBarHelper {
-  // SnackBarHelper.show()
   static void show(
     BuildContext context, {
     required Widget content,

@@ -28,45 +28,37 @@ class MiddleVendas extends StatelessWidget {
                     child: TextField(
                       decoration: InputDecoration(
                         hintText: 'Pesquisar vendas...',
-
                         hintStyle: TextStyle(
                           color: Colors.white,
-                        ), // Cor do texto de dica
+                        ),
                         border: InputBorder.none,
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Colors
-                                .white, // Cor da borda quando o TextField está habilitado
+                            color: Colors.white,
                           ),
-                          borderRadius: BorderRadius.circular(
-                              10.0), // Raio da borda (opcional)
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: Colors
-                                .white, // Cor da borda quando o TextField está focado
+                            color: Colors.white,
                           ),
-                          borderRadius: BorderRadius.circular(
-                              10.0), // Raio da borda (opcional)
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                         prefixIcon: Icon(
                           Icons.search,
                           color: Colors.white,
-                        ), // Cor do ícone de busca
+                        ),
                         suffixIcon: IconButton(
                           icon: Icon(
                             Icons.clear,
                             color: Colors.white,
-                          ), // Cor do ícone de limpar
+                          ),
                           onPressed: () {},
                         ),
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical:
-                                5.0), // Ajuste do preenchimento do conteúdo
+                        contentPadding: EdgeInsets.symmetric(vertical: 5.0),
                       ),
                       style: TextStyle(color: Colors.white, fontSize: 14),
-                      textAlignVertical: TextAlignVertical
-                          .center, // Alinhar verticalmente o texto no centro
+                      textAlignVertical: TextAlignVertical.center,
                     ),
                   ),
                   ElevatedButton(

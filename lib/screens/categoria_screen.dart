@@ -11,18 +11,20 @@ class CategoriaScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Categorias'),
       ),
-      body: Column(
-        children: [
-          HomeCategoria(),
-          SizedBox(
-            height: 20,
-          ),
-          Text('Adicionar/editar categoria'),
-          SizedBox(
-            height: 20,
-          ),
-          MiddleCategoria()
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            HomeCategoria(),
+            SizedBox(
+              height: 20,
+            ),
+            Text('Adicionar uma nova categoria'),
+            SizedBox(
+              height: 20,
+            ),
+            MiddleCategoria()
+          ],
+        ),
       ),
     );
   }

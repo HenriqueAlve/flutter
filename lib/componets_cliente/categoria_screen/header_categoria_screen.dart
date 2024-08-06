@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meu_tcc/data/produtos.model.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
+import 'package:meu_tcc/data/services.dart';
 import 'package:meu_tcc/main.dart';
+import 'package:meu_tcc/themes/themes_colors.dart';
 
 class HeaderCategoriaCliente extends StatefulWidget {
   const HeaderCategoriaCliente({super.key});
@@ -22,16 +21,13 @@ class _HeaderCategoriaClienteState extends State<HeaderCategoriaCliente> {
   }
 
   Future<void> _fetchCategorias() async {
-    final response = await http
-        .get(Uri.parse('http://192.168.100.2:8080/api/categoria/listar'));
-    if (response.statusCode == 200) {
-      final List<dynamic> data = json.decode(response.body);
+    try {
+      final categorias = await CategoriaService().buscarCategorias();
       setState(() {
-        _categorias = data.map((json) => CategoriaDTO.fromJson(json)).toList();
+        _categorias = categorias;
       });
-    } else {
-      // Tratar erro de requisição
-      print('Erro ao carregar categorias: ${response.statusCode}');
+    } catch (e) {
+      print('Erro ao carregar categorias: $e');
     }
   }
 
@@ -62,10 +58,30 @@ class _HeaderCategoriaClienteState extends State<HeaderCategoriaCliente> {
                     itemBuilder: (context, index) {
                       final categoria = _categorias[index];
                       return ListTile(
-                        title: Text(categoria.nome),
-                        onTap: () {
-                          // Ação ao clicar na categoria, se necessário
-                        },
+                        title: GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                              width: 300,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  color: ThemeColors.colorCard['cartao'],
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      categoria.nome,
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    Icon(Icons.arrow_forward_ios_outlined)
+                                  ],
+                                ),
+                              )),
+                        ),
+                        onTap: () {},
                       );
                     },
                   ),

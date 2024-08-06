@@ -47,17 +47,15 @@ class _HeaderCarrinhoState extends State<HeaderCarrinho> {
                             SizedBox(width: 10),
                             InkWell(
                               onTap: () {
-                                cartProvider.setSelectedIndex(
-                                    0); // Atualiza o índice selecionado
+                                cartProvider.setSelectedIndex(0);
                               },
                               child: Container(
                                 width: 30,
                                 height: 30,
                                 decoration: BoxDecoration(
                                   color: cartProvider.selectedIndex == 0
-                                      ? Colors.green // Cor quando selecionado
-                                      : Colors
-                                          .grey, // Cor quando não selecionado
+                                      ? Colors.green
+                                      : Colors.grey,
                                   shape: BoxShape.circle,
                                 ),
                                 child: cartProvider.selectedIndex == 0
@@ -117,17 +115,15 @@ class _HeaderCarrinhoState extends State<HeaderCarrinho> {
                             SizedBox(width: 10),
                             InkWell(
                               onTap: () {
-                                cartProvider.setSelectedIndex(
-                                    1); // Atualiza o índice selecionado
+                                cartProvider.setSelectedIndex(1);
                               },
                               child: Container(
                                 width: 30,
                                 height: 30,
                                 decoration: BoxDecoration(
                                   color: cartProvider.selectedIndex == 1
-                                      ? Colors.green // Cor quando selecionado
-                                      : Colors
-                                          .grey, // Cor quando não selecionado
+                                      ? Colors.green
+                                      : Colors.grey,
                                   shape: BoxShape.circle,
                                 ),
                                 child: cartProvider.selectedIndex == 1

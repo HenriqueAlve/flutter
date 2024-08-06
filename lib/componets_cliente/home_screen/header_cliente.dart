@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:meu_tcc/cliente_screens/busca_screen.dart';
 import 'package:meu_tcc/cliente_screens/carrinho_screen.dart';
+import 'package:meu_tcc/cliente_screens/favorite_screen.dart';
+import 'package:meu_tcc/data/produtos.model.dart';
 import 'package:meu_tcc/themes/themes_colors.dart';
+import 'package:provider/provider.dart';
 
 class HeaderCliente extends StatelessWidget {
   const HeaderCliente({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
+
     return Container(
       decoration: BoxDecoration(
         color: ThemeColors.primaryColor,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(15),
           bottomRight: Radius.circular(15),
         ),
@@ -21,35 +26,55 @@ class HeaderCliente extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            // Imagem no lado esquerdo
-            Image.asset(
-              'assets/images/paosemfundo-removebg-preview.png',
+            const Image(
+              image:
+                  AssetImage('assets/images/paosemfundo-removebg-preview.png'),
               width: 50,
               height: 50,
             ),
-            // Spacer para empurrar os ícones para a direita
-            Spacer(),
-            // Ícones no lado direito
-            Icon(
-              Icons.search_rounded,
-              size: 35,
-            ),
-            SizedBox(width: 20), // Espaçamento entre os ícones
-            Icon(
-              Icons.favorite_border,
-              size: 35,
-            ),
-            SizedBox(width: 20), // Espaçamento entre os ícones
+            const Spacer(),
             GestureDetector(
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => CarrinhoScrren(),
+                    builder: (context) => const BuscaProdutoScreen(),
                   ),
                 );
               },
-              child: Icon(
+              child: const Icon(
+                Icons.search_rounded,
+                size: 35,
+              ),
+            ),
+            const SizedBox(width: 20),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FavoriteScreen(
+                      produtosFavoritados: cartProvider.produtosFavoritados,
+                    ),
+                  ),
+                );
+              },
+              child: const Icon(
+                Icons.favorite_border,
+                size: 35,
+              ),
+            ),
+            const SizedBox(width: 20),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CarrinhoScrren(),
+                  ),
+                );
+              },
+              child: const Icon(
                 Icons.shopping_bag_rounded,
                 size: 35,
               ),

@@ -22,7 +22,7 @@ class TextoAnimado extends StatelessWidget {
               RotateAnimatedText('em nosso'),
               RotateAnimatedText('aplicativo'),
             ],
-            repeatForever: true, // Define o loop infinito
+            repeatForever: true,
             onTap: () {
               print("Tap Event");
             },

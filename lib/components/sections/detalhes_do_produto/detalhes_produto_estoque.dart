@@ -27,9 +27,7 @@ class _DetalhesEstoqueState extends State<DetalhesEstoque>
     )..repeat(reverse: true);
     _colorAnimation = ColorTween(begin: Colors.red, end: Colors.transparent)
         .animate(_controller);
-
-    // Verifica o estoque ao iniciar o widget
-    _checkStock(widget.produto.quantiadeEmEstoque);
+    _checkStock(widget.produto.quantidadeNoEstoque);
   }
 
   @override
@@ -47,10 +45,9 @@ class _DetalhesEstoqueState extends State<DetalhesEstoque>
   @override
   void didUpdateWidget(covariant DetalhesEstoque oldWidget) {
     super.didUpdateWidget(oldWidget);
-    // Verifica se o estoque mudou ao atualizar o widget
-    if (widget.produto.quantiadeEmEstoque !=
-        oldWidget.produto.quantiadeEmEstoque) {
-      _checkStock(widget.produto.quantiadeEmEstoque);
+    if (widget.produto.quantidadeNoEstoque !=
+        oldWidget.produto.quantidadeNoEstoque) {
+      _checkStock(widget.produto.quantidadeNoEstoque);
     }
   }
 
@@ -79,10 +76,10 @@ class _DetalhesEstoqueState extends State<DetalhesEstoque>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Estoque total: ${widget.produto.quantiadeEmEstoque}',
+                  'Estoque total: ${widget.produto.quantidadeNoEstoque}',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
                 ),
-                SizedBox(height: 10), // Espaçamento entre os textos
+                SizedBox(height: 10),
                 if (_showAlert)
                   AnimatedBuilder(
                     animation: _colorAnimation,

@@ -86,7 +86,7 @@ class _ListaDeEstoqueState extends State<ListaDeEstoque> {
                                   ),
                                 ),
                                 Text(
-                                  'Quantidade em estoque: ${produto.quantiadeEmEstoque}',
+                                  'Quantidade em estoque: ${produto.quantidadeNoEstoque}',
                                   style: const TextStyle(fontSize: 16),
                                 ),
                               ],

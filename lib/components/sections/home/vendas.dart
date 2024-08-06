@@ -19,7 +19,7 @@ class Vendas extends StatelessWidget {
         ),
         Container(
           width: 365,
-          height: 134, // Ajuste a altura conforme necessário
+          height: 134,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             color: ThemeColors.colorCard['cartao'],
@@ -30,11 +30,9 @@ class Vendas extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Linha contendo a imagem e os textos
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // Imagem com espaçamento à esquerda
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Image.asset(
@@ -45,7 +43,6 @@ class Vendas extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    // Textos centralizados verticalmente
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,8 +65,7 @@ class Vendas extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Spacer(), // Adiciona um espaço flexível entre a linha e o botão
-                // Botão
+                const Spacer(),
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: ElevatedButton(
@@ -77,13 +73,12 @@ class Vendas extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              VendasScreen(), // Tela que lista todos os produtos
+                          builder: (context) => VendasScreen(),
                         ),
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: ThemeColors.primaryColor, // Cor do botão
+                      backgroundColor: ThemeColors.primaryColor,
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 70),
                     ),

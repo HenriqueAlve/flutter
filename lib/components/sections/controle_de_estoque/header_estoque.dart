@@ -42,9 +42,8 @@ class HeaderEstoque extends StatelessWidget {
           width: 350,
           height: 50,
           decoration: BoxDecoration(
-            color: Color.fromRGBO(16, 20, 15, 1), // Cor de fundo
-            borderRadius: BorderRadius.circular(30.0), // Bordas arredondadas
-            // Cor da borda
+            color: Color.fromRGBO(16, 20, 15, 1),
+            borderRadius: BorderRadius.circular(30.0),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
@@ -57,19 +56,16 @@ class HeaderEstoque extends StatelessWidget {
           child: TextField(
             decoration: InputDecoration(
               hintText: 'Buscar...',
-              hintStyle: TextStyle(color: Colors.white), // Cor do texto de dica
+              hintStyle: TextStyle(color: Colors.white),
               border: InputBorder.none,
-              prefixIcon: Icon(Icons.search,
-                  color: Colors.white), // Cor do ícone de busca
+              prefixIcon: Icon(Icons.search, color: Colors.white),
               suffixIcon: IconButton(
-                icon: Icon(Icons.clear,
-                    color: Colors.white), // Cor do ícone de limpar
+                icon: Icon(Icons.clear, color: Colors.white),
                 onPressed: () {},
               ),
               contentPadding: EdgeInsets.only(top: 11),
             ),
-            style: TextStyle(
-                color: Colors.white, fontSize: 14), // Cor do texto digitado
+            style: TextStyle(color: Colors.white, fontSize: 14),
             onChanged: onSearch,
           ),
         ),

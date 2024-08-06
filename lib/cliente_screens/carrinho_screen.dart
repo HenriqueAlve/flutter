@@ -116,6 +116,15 @@ class _CarrinhoScrrenState extends State<CarrinhoScrren> {
                           });
                         },
                       ),
+                      IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () {
+                          // Remover o item do carrinho
+                          setState(() {
+                            cartProvider.removeItem(item);
+                          });
+                        },
+                      ),
                     ],
                   ),
                 );

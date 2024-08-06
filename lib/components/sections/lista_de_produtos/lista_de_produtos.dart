@@ -79,7 +79,7 @@ class _ListaDeProdutosState extends State<ListaDeProdutos> {
                                       ),
                                     ),
                                     Text(
-                                      'Categoria: ${produto.categoriaDTO.nome}',
+                                      'Categoria: ${produto.categoriaDTO?.nome}',
                                       style: const TextStyle(fontSize: 16),
                                     ),
                                     Text(
@@ -87,7 +87,7 @@ class _ListaDeProdutosState extends State<ListaDeProdutos> {
                                       style: const TextStyle(fontSize: 16),
                                     ),
                                     Text(
-                                      'Quantidade em estoque: ${produto.quantiadeEmEstoque}',
+                                      'Quantidade em estoque: ${produto.quantidadeNoEstoque}',
                                       style: const TextStyle(fontSize: 16),
                                     ),
                                   ],

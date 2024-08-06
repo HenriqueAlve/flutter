@@ -59,11 +59,11 @@ class _NavigatorBarState extends State<NavigatorBar> {
       screens: _buildScreens(),
       items: _navBarsItems(),
       confineToSafeArea: true,
-      backgroundColor: Colors.white, // Cor de fundo do bottom nav bar
-      handleAndroidBackButtonPress: true, // Botão de volta do Android
-      resizeToAvoidBottomInset: true, // Evitar a sobreposição do teclado
+      backgroundColor: Colors.white,
+      handleAndroidBackButtonPress: true,
+      resizeToAvoidBottomInset: true,
       stateManagement: true,
-      navBarStyle: NavBarStyle.style6, // Estilo do bottom nav bar
+      navBarStyle: NavBarStyle.style10, //MUDAR O ESTILO DO NAVBAR
     );
   }
 }

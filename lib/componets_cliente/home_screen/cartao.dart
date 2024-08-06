@@ -4,6 +4,7 @@ import 'package:meu_tcc/cliente_screens/detalhes_produto_cliente_screen.dart';
 import 'package:meu_tcc/components/cards.dart';
 import 'package:meu_tcc/data/produtos.model.dart';
 import 'package:meu_tcc/themes/themes_colors.dart';
+import 'package:meu_tcc/cliente_screens/favorite_screen.dart'; // Importar a tela de favoritos
 
 class CartaoProduto extends StatefulWidget {
   final ProdutoDTO produto;
@@ -46,17 +47,22 @@ class _CartaoProdutoState extends State<CartaoProduto> {
                 height: 30,
                 child: Center(
                   child: IconButton(
-                    icon: Icon(
-                      isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: ThemeColors.primaryColor,
-                      size: 24,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        isFavorite = !isFavorite;
-                      });
-                    },
-                  ),
+                      icon: Icon(
+                        isFavorite ? Icons.favorite : Icons.favorite_border,
+                        color: ThemeColors.primaryColor,
+                        size: 24,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          isFavorite = !isFavorite;
+
+                          if (isFavorite) {
+                            cartProvider.addToFavorites(widget.produto);
+                          } else {
+                            cartProvider.removeFromFavorites(widget.produto);
+                          }
+                        });
+                      }),
                 ),
               ),
               widget.produto.imagemBytes != null

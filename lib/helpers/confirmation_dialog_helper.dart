@@ -8,7 +8,7 @@ class ConfirmationDialogHelper {
     required VoidCallback confirmationCallback,
     String labelYesButton = 'Confirmar',
     String labelNoButton = 'Cancelar',
-    Color? yesButtonColor, // Adicionando cores opcionais para os botões
+    Color? yesButtonColor,
     Color? noButtonColor,
   }) {
     final confirmationDialog = AlertDialog(
@@ -21,9 +21,8 @@ class ConfirmationDialogHelper {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
-                  backgroundColor: yesButtonColor ??
-                      Theme.of(context)
-                          .primaryColor, // Cor do texto do botão "Confirmar"
+                  backgroundColor:
+                      yesButtonColor ?? Theme.of(context).primaryColor,
                 ),
                 onPressed: () {
                   Navigator.pop(context);
@@ -37,9 +36,8 @@ class ConfirmationDialogHelper {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.black,
-                  backgroundColor: noButtonColor ??
-                      Theme.of(context)
-                          .unselectedWidgetColor, // Cor do texto do botão "Cancelar"
+                  backgroundColor:
+                      noButtonColor ?? Theme.of(context).unselectedWidgetColor,
                 ),
                 onPressed: () {
                   Navigator.pop(context);

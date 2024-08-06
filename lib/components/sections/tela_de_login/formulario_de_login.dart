@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:meu_tcc/data/produtos.model.dart';
 import 'package:meu_tcc/themes/themes_colors.dart';
 import 'package:http/http.dart' as http;
@@ -97,7 +98,7 @@ class _FormularioDeLoginState extends State<FormularioDeLogin> {
               filled: true,
               fillColor: ThemeColors.primaryColor,
             ),
-            style: TextStyle(fontSize: 14),
+            style: TextStyle(fontSize: 14, color: Colors.white),
           ),
         ),
         SizedBox(height: 20),
@@ -119,7 +120,7 @@ class _FormularioDeLoginState extends State<FormularioDeLogin> {
               filled: true,
               fillColor: ThemeColors.primaryColor,
             ),
-            style: TextStyle(fontSize: 14),
+            style: TextStyle(fontSize: 14, color: Colors.white),
             obscureText: true,
           ),
         ),
@@ -199,9 +200,14 @@ class _FormularioDeLoginState extends State<FormularioDeLogin> {
           ),
         ),
         SizedBox(height: 15),
-        Text(
-          'Novo aqui? Registrar agora',
-          style: TextStyle(fontSize: 14),
+        GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, '/cadastro-usuario');
+          },
+          child: Text(
+            'Novo aqui? Registrar agora',
+            style: TextStyle(fontSize: 14),
+          ),
         ),
       ],
     );

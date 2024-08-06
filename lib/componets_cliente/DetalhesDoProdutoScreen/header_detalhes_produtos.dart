@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:meu_tcc/data/produtos.model.dart';
 import 'dart:typed_data';
-
 import 'package:meu_tcc/themes/themes_colors.dart';
 import 'package:provider/provider.dart';
 
 class HeaderDetalhesProdutos extends StatefulWidget {
-  final ProdutoDTO produto; // Use ProdutoDTO em vez de parâmetros separados
+  final ProdutoDTO produto;
 
   const HeaderDetalhesProdutos({
     super.key,
@@ -58,9 +57,9 @@ class _HeaderDetalhesProdutosState extends State<HeaderDetalhesProdutos> {
         Container(
           width: double.infinity,
           height: 400,
-          child: widget.produto.imagemProduto != null
+          child: widget.produto.imagemBytes != null
               ? Image.memory(
-                  widget.produto.imagemProduto!,
+                  widget.produto.imagemBytes!,
                   fit: BoxFit.cover,
                 )
               : Center(

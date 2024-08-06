@@ -35,7 +35,6 @@ class _CurvedBottomNavigationBarState extends State<CurvedBottomNavigationBar> {
       body: IndexedStack(
         index: _selectedIndex,
         children: [
-          // Suas telas vão aqui
           HomeScreenCliente(),
           ApresentacaoScreen(),
           CategoriaScreenCliente(),
@@ -61,7 +60,6 @@ class _CurvedBottomNavigationBarState extends State<CurvedBottomNavigationBar> {
         gapLocation: GapLocation.center,
         notchSmoothness: NotchSmoothness.softEdge,
         onTap: _onItemTapped,
-        // Personalize o design conforme necessário
         activeColor: ThemeColors.primaryColor,
         inactiveColor: Colors.grey,
         iconSize: 30,

@@ -10,8 +10,7 @@ class HeaderClienteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
-    final username =
-        authProvider.username ?? 'Usuário'; // Usa 'Usuário' se o nome for null
+    final username = authProvider.username ?? 'Usuário';
 
     return Container(
       width: double.infinity,
@@ -41,7 +40,9 @@ class HeaderClienteScreen extends StatelessWidget {
           ),
           SizedBox(height: 15),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, '/perfil-cliente');
+            },
             child: Container(
               width: 160,
               height: 35,

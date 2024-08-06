@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meu_tcc/components/cards.dart';
-import 'package:meu_tcc/data/services.dart'; // Atualize o caminho para o serviço de vendas
+import 'package:meu_tcc/data/services.dart';
+import 'package:meu_tcc/main.dart';
 
 class HomeVendas extends StatelessWidget {
   const HomeVendas({super.key});
@@ -12,7 +13,7 @@ class HomeVendas extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 15),
       child: Container(
-        height: 120, // Ajuste a altura do container
+        height: 120,
         child: Cards(
           boxContent: Column(
             children: [
@@ -24,9 +25,7 @@ class HomeVendas extends StatelessWidget {
                     child: Column(
                       children: [
                         Text('Total de vendas'),
-                        SizedBox(
-                            height:
-                                8), // Adicione um espaçamento entre o texto e o FutureBuilder
+                        SizedBox(height: 8),
                         FutureBuilder<double>(
                           future: vendaService.getTotalVendas(),
                           builder: (context, snapshot) {
@@ -53,15 +52,13 @@ class HomeVendas extends StatelessWidget {
                     child: Column(
                       children: [
                         Text('Pedidos'),
-                        SizedBox(
-                            height:
-                                8), // Adicione um espaçamento entre o texto e o FutureBuilder
+                        SizedBox(height: 8),
                         FutureBuilder<int>(
                           future: vendaService.getTotalPedidos(),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return CircularProgressIndicator();
+                              return LoadingIndicator();
                             } else if (snapshot.hasError) {
                               return Text('Erro');
                             } else {

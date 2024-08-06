@@ -35,7 +35,6 @@ class DetalhesDoProdutos extends StatelessWidget {
           DetalhesVendas(
             produto: produto,
           )
-          // Aqui você pode adicionar mais widgets para exibir outras informações do produto, como descrição, preço, etc.
         ],
       ),
     );

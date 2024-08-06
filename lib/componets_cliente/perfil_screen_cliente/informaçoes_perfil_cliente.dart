@@ -1,10 +1,25 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:meu_tcc/components/cards.dart';
+import 'package:meu_tcc/cliente_screens/apresentacao_screen.dart';
+import 'package:meu_tcc/cliente_screens/meus_pedidos_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:meu_tcc/themes/themes_colors.dart';
 
 class InformacoesPerfilCliente extends StatelessWidget {
   const InformacoesPerfilCliente({super.key});
+
+  void _launchWhatsApp(
+      {required String phoneNumber, required String message}) async {
+    final url =
+        Uri.parse('https://wa.me/$phoneNumber?text=${Uri.encodeFull(message)}');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,19 +49,31 @@ class InformacoesPerfilCliente extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 30, top: 15),
                 child: Column(
                   children: [
-                    Container(
-                      width: 150,
-                      height: 100,
-                      child: Center(
-                        child: Icon(
-                          Icons.text_snippet_rounded,
-                          size: 40,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MeusPedidosScreen(
+                              pedidos: [],
+                            ),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width: 150,
+                        height: 100,
+                        child: Center(
+                          child: Icon(
+                            Icons.text_snippet_rounded,
+                            size: 40,
+                          ),
                         ),
+                        decoration: BoxDecoration(
+                            boxShadow: kElevationToShadow[3],
+                            borderRadius: BorderRadius.circular(10),
+                            color: ThemeColors.colorCard['cartao']),
                       ),
-                      decoration: BoxDecoration(
-                          boxShadow: kElevationToShadow[3],
-                          borderRadius: BorderRadius.circular(10),
-                          color: ThemeColors.colorCard['cartao']),
                     ),
                     SizedBox(
                       height: 10,
@@ -63,19 +90,24 @@ class InformacoesPerfilCliente extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 30, top: 15),
                 child: Column(
                   children: [
-                    Container(
-                      width: 150,
-                      height: 100,
-                      child: Center(
-                        child: FaIcon(
-                          FontAwesomeIcons.commentDots,
-                          size: 40,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/ajuda');
+                      },
+                      child: Container(
+                        width: 150,
+                        height: 100,
+                        child: Center(
+                          child: FaIcon(
+                            FontAwesomeIcons.commentDots,
+                            size: 40,
+                          ),
                         ),
+                        decoration: BoxDecoration(
+                            boxShadow: kElevationToShadow[3],
+                            borderRadius: BorderRadius.circular(10),
+                            color: ThemeColors.colorCard['cartao']),
                       ),
-                      decoration: BoxDecoration(
-                          boxShadow: kElevationToShadow[3],
-                          borderRadius: BorderRadius.circular(10),
-                          color: ThemeColors.colorCard['cartao']),
                     ),
                     SizedBox(
                       height: 10,
@@ -114,18 +146,26 @@ class InformacoesPerfilCliente extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 35.0),
                 child: Column(
                   children: [
-                    Container(
-                      width: 80,
-                      height: 80,
-                      child: Center(
-                        child: FaIcon(
-                          FontAwesomeIcons.whatsapp,
+                    GestureDetector(
+                      onTap: () {
+                        _launchWhatsApp(
+                          phoneNumber: '5518998134659',
+                          message: 'Olá, estou interessado no seu produto!',
+                        );
+                      },
+                      child: Container(
+                        width: 80,
+                        height: 80,
+                        child: Center(
+                          child: FaIcon(
+                            FontAwesomeIcons.whatsapp,
+                          ),
                         ),
-                      ),
-                      decoration: BoxDecoration(
-                        boxShadow: kElevationToShadow[3],
-                        borderRadius: BorderRadius.circular(10),
-                        color: ThemeColors.colorCard['cartao'],
+                        decoration: BoxDecoration(
+                          boxShadow: kElevationToShadow[3],
+                          borderRadius: BorderRadius.circular(10),
+                          color: ThemeColors.colorCard['cartao'],
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -144,18 +184,26 @@ class InformacoesPerfilCliente extends StatelessWidget {
               ),
               Column(
                 children: [
-                  Container(
-                    width: 80,
-                    height: 80,
-                    child: Center(
-                      child: FaIcon(
-                        FontAwesomeIcons.store,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ApresentacaoScreen()));
+                    },
+                    child: Container(
+                      width: 80,
+                      height: 80,
+                      child: Center(
+                        child: FaIcon(
+                          FontAwesomeIcons.store,
+                        ),
                       ),
-                    ),
-                    decoration: BoxDecoration(
-                      boxShadow: kElevationToShadow[3],
-                      borderRadius: BorderRadius.circular(10),
-                      color: ThemeColors.colorCard['cartao'],
+                      decoration: BoxDecoration(
+                        boxShadow: kElevationToShadow[3],
+                        borderRadius: BorderRadius.circular(10),
+                        color: ThemeColors.colorCard['cartao'],
+                      ),
                     ),
                   ),
                   SizedBox(

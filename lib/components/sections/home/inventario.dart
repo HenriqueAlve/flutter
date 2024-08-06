@@ -18,7 +18,7 @@ class Invetario extends StatelessWidget {
         ),
         Container(
           width: 365,
-          height: 134, // Ajuste a altura conforme necessário
+          height: 134,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             color: ThemeColors.colorCard['cartao'],
@@ -29,11 +29,9 @@ class Invetario extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Linha contendo a imagem e os textos
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // Imagem com espaçamento à esquerda
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Image.asset(
@@ -44,7 +42,6 @@ class Invetario extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 10),
-                    // Textos centralizados verticalmente
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,8 +64,7 @@ class Invetario extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Spacer(), // Adiciona um espaço flexível entre a linha e o botão
-                // Botão
+                const Spacer(),
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: ElevatedButton(
@@ -76,7 +72,7 @@ class Invetario extends StatelessWidget {
                       Navigator.of(context).pushNamed('/estoque');
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: ThemeColors.primaryColor, // Cor do botão
+                      backgroundColor: ThemeColors.primaryColor,
                       padding:
                           EdgeInsets.symmetric(vertical: 10, horizontal: 80),
                     ),

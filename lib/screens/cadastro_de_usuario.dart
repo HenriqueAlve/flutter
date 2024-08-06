@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:lottie/lottie.dart';
+import 'package:meu_tcc/data/produtos.model.dart';
+import 'package:provider/provider.dart';
 
 class CadastroDeUsuario extends StatefulWidget {
   const CadastroDeUsuario({super.key});
@@ -11,8 +13,7 @@ class CadastroDeUsuario extends StatefulWidget {
 }
 
 class _CadastroDeUsuarioState extends State<CadastroDeUsuario> {
-  final _formKey =
-      GlobalKey<FormState>(); // Adiciona a chave global para o formulário
+  final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _nomeController = TextEditingController();
@@ -35,19 +36,27 @@ class _CadastroDeUsuarioState extends State<CadastroDeUsuario> {
       );
 
       if (response.statusCode == 200) {
-        // Cadastro bem-sucedido
+        final data = jsonDecode(response.body);
+
+        // Acessa o AuthProvider e configura o estado após o cadastro
+        final authProvider = Provider.of<AuthProvider>(context, listen: false);
+        authProvider
+            .setRole(data['role']); // Assumindo que a resposta inclui a role
+        authProvider
+            .setToken(data['token']); // Assumindo que a resposta inclui o token
+        authProvider.setUsername(_usernameController.text);
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Cadastro realizado com sucesso!')),
         );
 
-        // Navegue para a tela de login
         Navigator.pushReplacementNamed(context, '/login');
       } else {
-        // Trate o erro de cadastro
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-              content:
-                  Text('Falha ao realizar o cadastro: ${response.statusCode}')),
+            content:
+                Text('Falha ao realizar o cadastro: ${response.statusCode}'),
+          ),
         );
       }
     }
@@ -77,7 +86,7 @@ class _CadastroDeUsuarioState extends State<CadastroDeUsuario> {
                 SizedBox(height: 15),
                 _buildTextFormField(
                   controller: _usernameController,
-                  hintText: 'username',
+                  hintText: 'E-mail',
                 ),
                 SizedBox(height: 15),
                 _buildTextFormField(
@@ -97,13 +106,19 @@ class _CadastroDeUsuarioState extends State<CadastroDeUsuario> {
                 SizedBox(height: 15),
                 _buildTextFormField(
                   controller: _passwordController,
-                  hintText: 'password',
+                  hintText: 'Senha',
                   obscureText: true,
                 ),
                 SizedBox(height: 35),
                 ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.green),
+                  ),
                   onPressed: _cadastrar,
-                  child: Text('Cadastrar'),
+                  child: Text(
+                    'Cadastrar',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ],
             ),
@@ -124,12 +139,10 @@ class _CadastroDeUsuarioState extends State<CadastroDeUsuario> {
       child: TextFormField(
         controller: controller,
         obscureText: obscureText,
-        style: TextStyle(
-            color: Colors.white, fontSize: 15), // Cor do texto digitado
+        style: TextStyle(color: Colors.white, fontSize: 15),
         decoration: InputDecoration(
           hintText: hintText,
-          hintStyle: TextStyle(
-              fontSize: 15, color: Colors.white54), // Cor do texto de sugestão
+          hintStyle: TextStyle(fontSize: 15, color: Colors.white54),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),

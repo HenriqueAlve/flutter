@@ -4,18 +4,18 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 class ProdutoDTO {
-  int id;
-  String nome;
-  double preco;
-  int quantiadeEmEstoque;
-  Uint8List? imagemBytes;
-  CategoriaDTO categoriaDTO;
+  final int id;
+  final String nome;
+  final double preco;
+  final int quantidadeNoEstoque;
+  final Uint8List? imagemBytes;
+  final CategoriaDTO categoriaDTO;
 
   ProdutoDTO({
     required this.id,
     required this.nome,
     required this.preco,
-    required this.quantiadeEmEstoque,
+    required this.quantidadeNoEstoque,
     this.imagemBytes,
     required this.categoriaDTO,
   });
@@ -25,94 +25,22 @@ class ProdutoDTO {
       id: json['id'],
       nome: json['nome'],
       preco: json['preco'] != null ? json['preco'].toDouble() : 0.0,
-      quantiadeEmEstoque: json['quantiadeEmEstoque'] ?? 0,
+      quantidadeNoEstoque: json['quantiadeEmEstoque'] ?? 0,
       imagemBytes: json['imagem'] != null ? base64Decode(json['imagem']) : null,
-      categoriaDTO: CategoriaDTO.fromJson(json['categoriaDTO']),
+      categoriaDTO: CategoriaDTO.fromJson(json['categoriaDTO'] ??
+          {}), // Valor padrão para 'categoriaDTO' se for null
     );
   }
 
-  get imagemProduto => null;
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'nome': nome,
-      'preco': preco,
-      'quantidadeNoEstoque': quantiadeEmEstoque,
-      'imagem': imagemBytes != null ? base64Encode(imagemBytes!) : null,
-      'categoriaDTO': categoriaDTO.toJson(),
-    };
-  }
-}
-
-class CartProvider with ChangeNotifier {
-  List<CartItem> _cartItems = [];
-  int? _selectedIndex;
-
-  List<CartItem> get cartItems => _cartItems;
-  int? get selectedIndex => _selectedIndex;
-
-  void addItem(CartItem item) {
-    // Verificar se o produto já está no carrinho
-    int index = _cartItems
-        .indexWhere((cartItem) => cartItem.produto.id == item.produto.id);
-    if (index >= 0) {
-      // Atualizar a quantidade do produto existente
-      _cartItems[index] = CartItem(
-        produto: _cartItems[index].produto,
-        quantidade: _cartItems[index].quantidade + item.quantidade,
-      );
-    } else {
-      // Adicionar novo item ao carrinho
-      _cartItems.add(item);
-    }
-    notifyListeners();
-  }
-
-  void updateItem(CartItem item) {
-    // Verificar se o produto já está no carrinho
-    int index = _cartItems
-        .indexWhere((cartItem) => cartItem.produto.id == item.produto.id);
-    if (index >= 0) {
-      // Atualizar o item existente no carrinho
-      _cartItems[index] = item;
-    } else {
-      // Caso o item não exista, adiciona o item ao carrinho
-      _cartItems.add(item);
-    }
-    notifyListeners();
-  }
-
-  void setSelectedIndex(int index) {
-    _selectedIndex = index;
-    notifyListeners();
-  }
-}
-
-class CartItem {
-  final ProdutoDTO produto;
-  int quantidade; // Removido 'final'
-
-  CartItem({
-    required this.produto,
-    required this.quantidade,
-  });
-
-  double get precoTotal => produto.preco * quantidade;
-
-  String get nome => produto.nome;
-
-  double get preco => produto.preco;
-
-  int get id => produto.id; // Supondo que ProdutoDTO tem um campo 'id'
+  Object? toJson() {}
 }
 
 class CategoriaDTO {
-  int id;
+  int? id;
   String nome;
 
   CategoriaDTO({
-    required this.id,
+    this.id,
     required this.nome,
   });
 
@@ -146,11 +74,17 @@ class LoginResponse {
 class AuthProvider with ChangeNotifier {
   String? _role;
   String? _token;
-  String? _username; // Adicionando uma propriedade para o nome do usuário
+  String? _username;
+  String? _nome;
+  String? _cpf;
+  String? _telefone;
 
   String? get role => _role;
   String? get token => _token;
-  String? get username => _username; // Getter para o nome do usuário
+  String? get username => _username;
+  String? get nome => _nome;
+  String? get cpf => _cpf;
+  String? get telefone => _telefone;
 
   void setRole(String role) {
     _role = role;
@@ -167,6 +101,21 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void setNome(String nome) {
+    _nome = nome;
+    notifyListeners();
+  }
+
+  void setCpf(String cpf) {
+    _cpf = cpf;
+    notifyListeners();
+  }
+
+  void setTelefone(String telefone) {
+    _telefone = telefone;
+    notifyListeners();
+  }
+
   Future<void> login(BuildContext context, String username, String password,
       String string) async {
     final response = await http.post(
@@ -177,23 +126,135 @@ class AuthProvider with ChangeNotifier {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      final String role = data['role'];
-      final String token = data['token'];
 
-      // Armazene o token, o tipo de perfil e o nome de usuário no provider
+      final String role = data['role'] ?? 'Desconhecido';
+      final String token = data['token'] ?? '';
+      final String nome = data['nome'] ?? 'Desconhecido';
+      final String cpf = data['cpf'] ?? 'Desconhecido';
+      final String telefone = data['telefone'] ?? 'Desconhecido';
+
       setRole(role);
       setToken(token);
-      setUsername(username); // Armazenando o nome do usuário
+      setUsername(username);
+      setNome(nome);
+      setCpf(cpf);
+      setTelefone(telefone);
 
-      // Navegue para a tela apropriada
       if (role == 'ROOT') {
         Navigator.pushReplacementNamed(context, '/home');
       } else if (role == 'USER') {
         Navigator.pushReplacementNamed(context, '/bar');
       }
     } else {
-      // Trate o erro de login
       print('Erro ao fazer login: ${response.statusCode}');
     }
+  }
+}
+
+class CartProvider with ChangeNotifier {
+  List<CartItem> _cartItems = [];
+  List<ProdutoDTO> _produtosFavoritados = [];
+  int? _selectedIndex;
+
+  List<CartItem> get cartItems => _cartItems;
+  List<ProdutoDTO> get produtosFavoritados => _produtosFavoritados;
+  int? get selectedIndex => _selectedIndex;
+
+  void addItem(CartItem item) {
+    int index = _cartItems
+        .indexWhere((cartItem) => cartItem.produto.id == item.produto.id);
+    if (index >= 0) {
+      _cartItems[index] = CartItem(
+        produto: _cartItems[index].produto,
+        quantidade: _cartItems[index].quantidade + item.quantidade,
+      );
+    } else {
+      _cartItems.add(item);
+    }
+    notifyListeners();
+  }
+
+  void updateItem(CartItem item) {
+    int index = _cartItems
+        .indexWhere((cartItem) => cartItem.produto.id == item.produto.id);
+    if (index >= 0) {
+      _cartItems[index] = item;
+    } else {
+      _cartItems.add(item);
+    }
+    notifyListeners();
+  }
+
+  void removeItem(CartItem item) {
+    _cartItems
+        .removeWhere((cartItem) => cartItem.produto.id == item.produto.id);
+    notifyListeners();
+  }
+
+  void setSelectedIndex(int index) {
+    _selectedIndex = index;
+    notifyListeners();
+  }
+
+  void addToFavorites(ProdutoDTO produto) {
+    if (!_produtosFavoritados.contains(produto)) {
+      _produtosFavoritados.add(produto);
+      notifyListeners();
+    }
+  }
+
+  void removeFromFavorites(ProdutoDTO produto) {
+    if (_produtosFavoritados.contains(produto)) {
+      _produtosFavoritados.remove(produto);
+      notifyListeners();
+    }
+  }
+
+  void clearCart() {
+    _cartItems.clear();
+    notifyListeners();
+  }
+}
+
+class CartItem {
+  final ProdutoDTO produto;
+  int quantidade;
+
+  CartItem({
+    required this.produto,
+    required this.quantidade,
+  });
+
+  double get precoTotal => produto.preco * quantidade;
+
+  String get nome => produto.nome;
+
+  double get preco => produto.preco;
+
+  int? get id => produto.id;
+}
+
+class Pedido {
+  final String id;
+  final DateTime data;
+  final List<ProdutoDTO> itens;
+  final String status;
+
+  Pedido({
+    required this.id,
+    required this.data,
+    required this.itens,
+    required this.status,
+  });
+}
+
+class PedidoProvider with ChangeNotifier {
+  List<Pedido> _pedidos = [];
+
+  List<Pedido> get pedidos => _pedidos;
+
+  void adicionarPedido(Pedido pedido) {
+    _pedidos.add(pedido);
+    notifyListeners();
   }
 }
